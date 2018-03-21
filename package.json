@@ -1,0 +1,22 @@
+{
+  "name": "linguo",
+  "version": "1.0.0",
+  "description": "Simpsons themed Discord bot using discord.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "enginges": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "chalk": "^2.3.1",
+    "discord.js": "^11.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.1"
+  },
+  "author": "",
+  "license": "ISC"
+}
