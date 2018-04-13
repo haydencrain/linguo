@@ -2,17 +2,19 @@
   "name": "linguo",
   "version": "1.0.0",
   "description": "Simpsons themed Discord bot using discord.js",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "enginges": {
     "node": ">=8"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "chalk": "^2.3.1",
-    "discord.js": "^11.3.0"
+    "discord.js": "^11.3.0",
+    "query-string": "^6.0.0"
   },
   "devDependencies": {
     "eslint": "^4.18.1"
