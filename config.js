@@ -5,7 +5,7 @@ const config = {
   'prefix': 'Linguo',
   'admins': [],
   'support': [],
-  'token': secrets.token,
+  'token': process.env.TOKEN || secrets.token,
 };
 
 module.exports = config;
