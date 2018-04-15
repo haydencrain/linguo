@@ -1,4 +1,10 @@
-const secrets = require('./secrets.json');
+var secrets;
+try {
+  secrets = require('./secrets.json');
+}
+catch (err) {
+  console.log('No secrets file available :)')
+}
 
 const config = {
   'ownerId': '108412658214006784', // Dosss User id
