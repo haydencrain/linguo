@@ -209,4 +209,4 @@ const toMemeAttachment = (caption) => {
   });
 };
 
-client.login(client.config.token);
+client.login(process.env.TOKEN || client.config.token);
