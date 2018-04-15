@@ -8,7 +8,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "enginges": {
-    "node": ">=8"
+    "node": ">=8",
+    "npm": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haydencrain/Linguo"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -19,6 +24,9 @@
   "devDependencies": {
     "eslint": "^4.18.1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "haydencrain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/haydencrain/Linguo/issues"
+  }
 }
