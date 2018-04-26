@@ -3,7 +3,7 @@ const queryString = require('query-string');
 const util = require('util');
 
 const SEARCH_URL = 'https://frinkiac.com/api/search?%s';
-const MEME_URL = 'https://frinkiac.com/meme/%s/%s?%s';
+const MEME_URL = 'https://frinkiac.com/meme/%s/%s.jpg?%s';
 const CAPTION_URL = 'https://frinkiac.com/api/caption?%s';
 const IMAGE_URL = 'https://frinkiac.com/img/%s/%s.jpg';
 const FAVICON = 'https://frinkiac.com/favicon.ico';
