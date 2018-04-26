@@ -1,5 +1,5 @@
 # Linguo - A Discord bot
-[Click here to add to your server](https://discordapp.com/oauth2/authorize?client_id=257825255194624000&scope=bot)
+[Click here to add to your server](https://discordapp.com/oauth2/authorize?client_id=371588691845709825&scope=bot)
 
 
 # Installing locally
