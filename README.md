@@ -6,6 +6,11 @@
 1. npm install
 2. npm start
 
+# Deploying to heroku
+Reference: [discord.js-heroku](https://github.com/synicalsyntax/discord.js-heroku)
+
+git push heroku master
+
 
 ## TODOS:
 - [x] deploy to heroku
