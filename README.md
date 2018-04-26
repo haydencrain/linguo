@@ -7,7 +7,7 @@
 2. npm start
 
 
-##TODOS:
+## TODOS:
 - [x] deploy to heroku
 - [ ] automatic deployment
 - [ ] Better error handling? because it's currently trash lol
