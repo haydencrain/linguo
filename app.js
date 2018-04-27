@@ -12,6 +12,11 @@ const error = chalk.red;
 const warn = chalk.warn;
 const debug = chalk.dim.white;
 
+const Raven = require('raven');
+Raven.config('https://10f30fa174bc42aeb4d26249f8cd89a8@sentry.io/1197471', {
+  captureUnhandledRejections: true
+}).install();
+
 // plugins
 const plugins = require('./plugins');
 const frinkiac = plugins.frinkiac;
