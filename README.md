@@ -17,4 +17,5 @@ git push heroku master
 - [ ] automatic deployment
 - [ ] Better error handling? because it's currently trash lol
 - [ ] playback youtube video functionality e.g. like [OhGodMusicBot](https://github.com/bdistin/OhGodMusicBot)
+- [ ] implement [luis ai!] (https://www.luis.ai/), or something similar to that
 
