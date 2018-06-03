@@ -1,3 +1,4 @@
+// Attr: https://github.com/adjavaherian/frinkiac/blob/master/index.js
 const axios = require('axios');
 const queryString = require('query-string');
 const util = require('util');
