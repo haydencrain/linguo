@@ -1,6 +1,6 @@
-const axios = require('axios');
-const queryString = require('query-string');
-const util = require('util');
+import axios from 'axios';
+import * as queryString from 'query-string';
+import util from 'util';
 
 const SEARCH_URL = 'https://frinkiac.com/api/search?%s';
 const MEME_URL = 'https://frinkiac.com/meme/%s/%s.jpg?%s';
@@ -10,12 +10,12 @@ const FAVICON = 'https://frinkiac.com/favicon.ico';
 const RAND_URL = 'https://frinkiac.com/api/random';
 const HERO_URL = 'https://frinkiac.com/img/hero.gif';
 
-exports.searchURL = query => {
+const searchURL = query => {
   query = queryString.stringify({ q: query || '' });
   return util.format(SEARCH_URL, query);
 };
 
-exports.memeURL = (episode, timestamp, caption) => {
+const memeURL = (episode, timestamp, caption) => {
   // b64lines=Ymx1cnN0IG9mIHRpbWVzIQ==
   // eventually clean emojis
   if (typeof Buffer === 'function') {
@@ -31,25 +31,25 @@ exports.memeURL = (episode, timestamp, caption) => {
   return util.format(MEME_URL, episode, timestamp, query);
 };
 
-exports.captionURL = (episode, timestamp) => {
+const captionURL = (episode, timestamp) => {
   const query = queryString.stringify({ e: episode, t: timestamp });
   return util.format(CAPTION_URL, query);
 };
 
-exports.imageURL = (episode, timestamp) => {
-  return util.format(IMAGE_URL, episode, timestamp);    
+const imageURL = (episode, timestamp) => {
+  return util.format(IMAGE_URL, episode, timestamp);
 };
 
-exports.randomURL = () => {
+const randomURL = () => {
   return util.format(RAND_URL);
 };
 
-exports.heroURL = () => { 
+const heroURL = () => {
   return util.format(HERO_URL);
 };
 
-exports.caption = (episode, timestamp) => {
-  return axios(this.captionURL(episode, timestamp))
+const caption = (episode, timestamp) => {
+  return axios(captionURL(episode, timestamp))
     .then(res => {
       return res;
     })
@@ -58,8 +58,8 @@ exports.caption = (episode, timestamp) => {
     });
 };
 
-exports.search = query => {
-  return axios(this.searchURL(query))
+const search = query => {
+  return axios(searchURL(query))
     .then(res => {
       return res;
     })
@@ -68,8 +68,8 @@ exports.search = query => {
     });
 };
 
-exports.meme = (episode, timestamp, caption) => {
-  return axios(this.memeURL(episode, timestamp, caption))
+const meme = (episode, timestamp, caption) => {
+  return axios(memeURL(episode, timestamp, caption))
     .then(res => {
       return res;
     })
@@ -78,8 +78,8 @@ exports.meme = (episode, timestamp, caption) => {
     });
 };
 
-exports.random = () => {
-  return axios(this.randomURL())
+const random = () => {
+  return axios(randomURL())
     .then(res => {
       return res;
     })
@@ -88,4 +88,14 @@ exports.random = () => {
     });
 };
 
+const getImageUrl = (episode, timestamp) => {
+  return imageURL(episode, timestamp);
+};
 
+export default {
+  caption,
+  search,
+  meme,
+  random,
+  getImageUrl
+};

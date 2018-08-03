@@ -1,1 +1,0 @@
-module.exports.frinkiac = require('./Frinkiac/frinkiac.js');

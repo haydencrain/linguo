@@ -14,4 +14,4 @@ const config = {
   token: process.env.TOKEN || secrets.token_dev,
 };
 
-module.exports = config;
+export default config;
