@@ -34,14 +34,14 @@ const play = async (song, id, message) => {
       if (!args) return;
       let command = args.shift().toLowerCase();
       switch (command) {
-        case 'pause':
-          await m.channel.sendMessage('Paused Playback!');
-          dispatcher.pause();
-          break;
-        case 'resume':
-          await m.channel.sendMessage('Resumed Playback!');
-          dispatcher.resume();
-          break;
+        // case 'pause':
+        //   await m.channel.sendMessage('Paused Playback!');
+        //   dispatcher.pause();
+        //   break;
+        // case 'resume':
+        //   await m.channel.sendMessage('Resumed Playback!');
+        //   dispatcher.resume();
+        //   break;
         case 'skip':
           await m.channel.sendMessage('Song Skipped!');
           dispatcher.end();

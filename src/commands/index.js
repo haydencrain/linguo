@@ -65,14 +65,14 @@ const index = {
     description: 'Skip the current song',
     execute: () => {/*empty function as it is handled elsewhere*/}
   },
-  'pause': {
-    description: 'Pause the current song',
-    execute: () => {/*empty function as it is handled elsewhere*/ }
-  },
-  'resume': {
-    description: 'Resume the current song',
-    execute: () => {/*empty function as it is handled elsewhere*/ }
-  }
+  // 'pause': {
+  //   description: 'Pause the current song',
+  //   execute: () => {/*empty function as it is handled elsewhere*/ }
+  // },
+  // 'resume': {
+  //   description: 'Resume the current song',
+  //   execute: () => {/*empty function as it is handled elsewhere*/ }
+  // }
 };
 
 export default index;
