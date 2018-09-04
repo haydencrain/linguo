@@ -14,8 +14,8 @@ git push heroku master
 
 ## TODOS:
 - [x] deploy to heroku
-- [ ] automatic deployment
-- [ ] Better error handling? because it's currently trash lol
-- [ ] playback youtube video functionality e.g. like [OhGodMusicBot](https://github.com/bdistin/OhGodMusicBot)
-- [ ] implement [luis ai!] (https://www.luis.ai/), or something similar to that
+- [x] automatic deployment
+- [x] playback youtube video functionality e.g. like [OhGodMusicBot](https://github.com/bdistin/OhGodMusicBot)
+- [ ] search for youtube videos without having to use url
+- [ ] implement [luis ai!](https://www.luis.ai/), or something similar to that
 
