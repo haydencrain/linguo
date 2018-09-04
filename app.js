@@ -1,6 +1,6 @@
-import client from './client';
+import client from './src/client';
 import config from './config';
-import helpers from './utils/helpers';
+import helpers from './src/utils/helpers';
 import raven from 'raven';
 
 // Check that node version is the required node version
