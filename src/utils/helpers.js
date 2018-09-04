@@ -1,5 +1,19 @@
 const isDevelopment = () => {
   return process.env.ENVIRONMENT === 'development';
+};
+
+const getMessageArgs = (client, message) => {
+  // return if message is from bot or is a client message
+  if (message.author.id === client.user.id || message.author.bot)
+    return null;
+
+  // determine which prefix is used, return if message does not contain prefix
+  var prefix = determinePrefixOrMentioned(message, client);
+  if (message.content.indexOf(prefix) !== 0)
+    return null;
+
+  // split into command and args
+  return message.content.slice(prefix.length).trim().split(/ +/g);
 }
 
 const sendErrorMessage = (err, errMsg, message) => {
@@ -22,8 +36,9 @@ const toSubtitleString = (subtitles) => {
 
 export default {
   isDevelopment,
+  getMessageArgs,
   sendErrorMessage,
   determinePrefixOrMentioned,
   toSubtitleString
-}
+};
 

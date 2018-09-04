@@ -1,19 +1,12 @@
 import discord from 'discord.js';
 import logging from './utils/logging';
 import helpers from './utils/helpers';
-import commands from './commands/index';
+import commands from './commands';
 
 const messageHandler = async (client, message) => {
-  // return if message is from bot or is a client message
-  if (message.author.id === client.user.id || message.author.bot) return;
-
-  // determine which prefix is used, return if message does not contain prefix
-  var prefix = helpers.determinePrefixOrMentioned(message, client);
-  if (message.content.indexOf(prefix) !== 0) return;
-
-  // split into command and args
-  var args = message.content.slice(prefix.length).trim().split(/ +/g);
-  var command = args.shift().toLowerCase();
+  let args = helpers.getMessageArgs(client, message);
+  if (!args) return;
+  let command = args.shift().toLowerCase();
 
   try {
     if (commands.hasOwnProperty(command)) commands[command].execute(message, args);

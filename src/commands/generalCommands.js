@@ -1,7 +1,7 @@
 import frinkiac from '../utils/frinkiac';
 import helpers from '../utils/helpers';
 
-const isLinguoDead = async (message, args) => {
+const isLinguoDead = async (message) => {
   var m = await message.channel.send('Linguo dead?');
   m.edit('Linguo IS dead!');
 };
@@ -34,7 +34,7 @@ const getScreencap = async (message, args) => {
   catch (err) { helpers.sendErrorMessage(err, err.message, message); }
 };
 
-const getRandomScreencap = async (message, args) => {
+const getRandomScreencap = async (message) => {
   try {
     var caption = await frinkiac.random();
     await message.channel.send(helpers.toSubtitleString(caption.data.Subtitles), toImageAttachment(caption));
@@ -72,4 +72,4 @@ export default {
   getScreencap,
   getRandomScreencap,
   makeMemeImage,
-}
+};
