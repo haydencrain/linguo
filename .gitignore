@@ -1,5 +1,8 @@
 secrets.json
 
+# vscode
+.vscode
+
 # Logs
 logs
 *.log
