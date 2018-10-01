@@ -45,7 +45,7 @@ const index = {
     description: 'Join the voice channel you are currently in',
     execute: voiceChannelCommands.joinChannel
   },
-  'leave': {
+  'fuck off': {
     description: 'Leave the current voice channel',
     execute: voiceChannelCommands.leaveChannel
   },
