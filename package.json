@@ -6,7 +6,7 @@
   "scripts": {
     "start-prod": "npm run clean && npm run build && npm run start-build-prod",
     "clean": "rm -rf build && mkdir build",
-    "build": "babel -d ./build --ignore node_modules",
+    "build": "npx babel -d ./build --ignore node_modules",
     "start-build-prod": "ENVIRONMENT='production' node ./build/app.js",
     "start": "ENVIRONMENT='development' babel-node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
