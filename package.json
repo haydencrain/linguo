@@ -4,8 +4,11 @@
   "description": "Simpsons themed Discord bot using discord.js",
   "main": "app.js",
   "scripts": {
+    "start-prod": "npm run clean && npm run build && npm run start-build-prod",
+    "clean": "rm -rf build && mkdir build",
+    "build": "babel -d ./build --ignore node_modules",
+    "start-build-prod": "ENVIRONMENT='production' node ./build/app.js",
     "start": "ENVIRONMENT='development' babel-node app.js",
-    "start-prod": "ENVIRONMENT='production' babel-node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "enginges": {
@@ -26,6 +29,8 @@
     "ytdl-core": "^0.25.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "eslint": "^4.18.1"
