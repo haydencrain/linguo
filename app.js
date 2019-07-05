@@ -13,5 +13,4 @@ if (!helpers.isDevelopment()) {
   }).install();
 }
 
-console.log('help me');
 client.start(config);
