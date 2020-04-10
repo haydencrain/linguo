@@ -1,43 +1,26 @@
 {
-  "name": "linguo",
-  "version": "1.0.0",
-  "description": "Simpsons themed Discord bot using discord.js",
-  "main": "app.js",
+  "name": "babel-typescript-sample",
+  "version": "0.7.2",
+  "license": "MIT",
   "scripts": {
-    "start-prod": "npm run clean && npm run build && npm run start-build-prod",
-    "clean": "rm -rf build && mkdir build",
-    "build": "npx babel -d ./build --ignore node_modules",
-    "start-build-prod": "ENVIRONMENT='production' node ./build/app.js",
-    "start": "ENVIRONMENT='development' babel-node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "enginges": {
-    "node": ">=8",
-    "npm": "*"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/haydencrain/Linguo"
-  },
-  "dependencies": {
-    "axios": "^0.18.0",
-    "chalk": "^2.4.1",
-    "discord.js": "^11.3.0",
-    "opusscript": "0.0.6",
-    "query-string": "^6.0.0",
-    "raven": "^2.6.0",
-    "ytdl-core": "^0.25.2"
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "start": "npm run build && node ./lib/index.js",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.2",
-    "@babel/core": "^7.1.2",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "eslint": "^4.18.1"
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "typescript": "^3.7.5"
   },
-  "author": "haydencrain",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/haydencrain/Linguo/issues"
+  "dependencies": {
+    "@types/node": "^13.11.1",
+    "chalk": "^4.0.0",
+    "discord.js": "^12.1.1"
   }
 }
