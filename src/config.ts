@@ -19,7 +19,7 @@ const config: Config = {
   prefix: 'Linguo',
   admins: [],
   support: [],
-  token: process.env.TOKEN || 'MzcxNTg4NjkxODQ1NzA5ODI1.DM4DEw.1CjWbn9X-jh0oOXl_b31F1KB3Pc',
+  token: process.env.TOKEN || secrets.token,
 };
 
 export default config;
