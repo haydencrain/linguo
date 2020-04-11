@@ -1,13 +1,10 @@
-import { installClient } from "./client/install";
-import config from './config';
-import { installLogging } from "./logging/install";
+import { installClient } from './client/install';
+import { config, Config } from './config';
+import { installLogging } from './services/logging/install';
 
-(function(config) {
-  const { client } = installClient();
+(function (config: Config) {
+  const { client } = installClient({ activityMsg: config.activityMsg });
   installLogging({ client });
-
 
   client.login(config.token);
 })(config);
-
-

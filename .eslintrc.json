@@ -1,0 +1,24 @@
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module"
+  },
+  "rules": {
+    "comma-dangle": ["error", "always"],
+    "space-before-function-paren": ["warn", "never"],
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "indent": ["error", 2, {
+      "SwitchCase": 1
+    }],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["warn", "single"],
+    "semi": ["warn", "always"]
+  }
+}

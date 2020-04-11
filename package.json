@@ -8,7 +8,7 @@
     "start": "npm run build && node ./lib/index.js",
     "build": "npm run build:types && npm run build:js",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline"
+    "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline --copy-files"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
@@ -16,11 +16,15 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
+    "eslint": "^6.8.0",
     "typescript": "^3.7.5"
   },
   "dependencies": {
     "@types/node": "^13.11.1",
+    "axios": "^0.19.2",
     "chalk": "^4.0.0",
-    "discord.js": "^12.1.1"
+    "discord.js": "^12.1.1",
+    "query-string": "^6.12.0",
+    "util": "^0.12.2"
   }
 }
