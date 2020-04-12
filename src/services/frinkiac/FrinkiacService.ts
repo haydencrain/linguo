@@ -2,6 +2,43 @@ import axios from 'axios';
 import * as queryString from 'query-string';
 import util from 'util';
 
+export type Episode = {
+  Id: number;
+  Key: string;
+  Season: number;
+  EpisodeNumber: number;
+  Title: string;
+  Director: string;
+  Writer: string;
+  OriginalAirDate: string;
+  WikiLink: string;
+};
+
+export type Frame = {
+  Id: number;
+  Episode: string;
+  Timestamp: number;
+};
+
+export type Subtitle = {
+  Id: number;
+  RepresentativeTimestamp: number;
+  Episode: string;
+  StartTimestamp: number;
+  EndTimestamp: number;
+  Content: string;
+  Language: string;
+};
+
+export type SearchResponse = Frame[];
+
+export type CaptionResponse = {
+  Episode: Episode;
+  Frame: Frame;
+  Subtitles: Subtitle[];
+  Nearby: Frame[];
+};
+
 export class FrinkiacService {
   private static BASE_URL = 'https://frinkiac.com/';
   private static SEARCH_URL = `api/search?%s`;
@@ -37,7 +74,16 @@ export class FrinkiacService {
     return util.format(this.searchUrlFormat, query);
   }
 
-  private buildMemeUrl(episode: string, timestamp: string, caption: string): string {
+  private buildCaptionUrl(episode: string, timestamp: string): string {
+    const query = queryString.stringify({ e: episode, t: timestamp });
+    return util.format(this.captionUrlFormat, query);
+  }
+
+  imageUrl(episode: string, timestamp: string): string {
+    return util.format(this.iamgeUrlFormat, episode, timestamp);
+  }
+
+  memeUrl(episode: string, timestamp: string, caption: string): string {
     // b64lines=Ymx1cnN0IG9mIHRpbWVzIQ==
     // eventually clean emojis
     let b64lines;
@@ -51,34 +97,19 @@ export class FrinkiacService {
     return util.format(this.memeUrlFormat, episode, timestamp, query);
   }
 
-  private buildCaptionUrl(episode: string, timestamp: string): string {
-    const query = queryString.stringify({ e: episode, t: timestamp });
-    return util.format(this.captionUrlFormat, query);
-  }
-
-  imageUrl(episode: string, timestamp: string): string {
-    return util.format(this.iamgeUrlFormat, episode, timestamp);
-  }
-
-  async search(search: string): Promise<any> {
+  async search(search: string): Promise<SearchResponse> {
     const url = this.buildSearchUrl(search);
     const { data } = await axios(url);
     return data;
   }
 
-  async meme(episde: string, timestamp: string, caption: string): Promise<any> {
-    const url = this.buildMemeUrl(episde, timestamp, caption);
-    const { data } = await axios(url);
-    return data;
-  }
-
-  async caption(episode: string, timestamp: string): Promise<any> {
+  async caption(episode: string, timestamp: string): Promise<CaptionResponse> {
     const url = this.buildCaptionUrl(episode, timestamp);
     const { data } = await axios(url);
     return data;
   }
 
-  async random(): Promise<any> {
+  async random(): Promise<CaptionResponse> {
     const url = this.randUrlFormat;
     const { data } = await axios(url);
     return data;

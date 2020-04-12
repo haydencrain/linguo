@@ -1,30 +1,17 @@
 import { Message } from 'discord.js';
 import { FrinkiacService } from '../services/frinkiac/FrinkiacService';
-import { Bot, Command } from '../bot/Bot';
+import { Bot } from '../bot/Bot';
 import { GeneralCommands } from './General';
 import { FrinkiacCommands } from './Frinkiac';
+import { Command } from '../classes/Command';
 
-export function installCommands({
-  bot,
-  frinkiacService,
-  error
-}: {
-  bot: Bot;
-  frinkiacService: FrinkiacService;
-  error(err: Error);
-}) {
-  const errorHandler = (err: Error, errMsg: string, channel: Message['channel']) => {
-    console.log('hello');
-    error(err);
-    channel.send('Error: ' + errMsg, { files: [frinkiacService.imageUrl('S12E18', '1232440')] });
-  };
-
+export function installCommands({ bot, frinkiacService }: { bot: Bot; frinkiacService: FrinkiacService }) {
   const getHelp = (message: Message, args: string[]) => {
     message.channel.send(bot.commandDescriptions);
   };
 
-  const generalCommands = new GeneralCommands(errorHandler);
-  const frinkiacCommands = new FrinkiacCommands(frinkiacService, errorHandler);
+  const generalCommands = new GeneralCommands();
+  const frinkiacCommands = new FrinkiacCommands(frinkiacService);
 
   bot.addCommands([
     new Command({
@@ -43,9 +30,27 @@ export function installCommands({
       exec: (...args) => generalCommands.repeatMessage(...args)
     }),
     new Command({
+      name: 'search',
+      description:
+        'Search for a particular quote from The Simpsons, and Linguo will return the most relevant screencap',
+      exec: (...args) => frinkiacCommands.searchQuote(...args)
+    }),
+    new Command({
+      name: 'image',
+      description:
+        "Enter a particaluar episode number and timestamp, and Linguo will return the specific screencap. e.g. 'S05E08 116632'",
+      exec: (...args) => frinkiacCommands.getScreencap(...args)
+    }),
+    new Command({
       name: 'random',
       description: 'Linguo will return a random image',
       exec: (...args) => frinkiacCommands.getRandomScreencap(...args)
+    }),
+    new Command({
+      name: 'meme',
+      description:
+        'Search for a particular quote from The Simpsons, and Linguo will return an image with the subtitles included',
+      exec: (...args) => frinkiacCommands.makeMemeImage(...args)
     })
   ]);
 }

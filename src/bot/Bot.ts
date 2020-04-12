@@ -1,28 +1,9 @@
 import { Client, ClientOptions, Message } from 'discord.js';
+import { Command } from '../classes/Command';
 
 export type BotOptions = {
   prefix?: string;
 };
-
-export class Command {
-  name: string;
-  description: string;
-  exec: (message: Message, args: string[]) => void;
-
-  constructor({
-    name,
-    description,
-    exec
-  }: {
-    name: string;
-    description: string;
-    exec: (message: Message, args: string[]) => void;
-  }) {
-    this.name = name;
-    this.description = description;
-    this.exec = exec;
-  }
-}
 
 export class Bot extends Client {
   commands: Command[] = [];

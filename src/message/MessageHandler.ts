@@ -1,22 +1,16 @@
 import { Message } from 'discord.js';
 import { Bot } from '../bot/Bot';
-
-export class Argument {
-  name: string;
-  params: string[];
-  constructor(private args: string) {
-    const argsArr = args.trim().split(/ +/g);
-    this.name = argsArr.shift();
-    this.params = argsArr;
-  }
-}
+import { Argument } from '../classes/Argument';
 
 export class MessageHandler {
-  constructor(private bot: Bot) {
-    this.bot.on('message', this.onMessage);
+  constructor(
+    private bot: Bot,
+    private errorHandler: (err: Error, errMsg: string, channel: Message['channel']) => void
+  ) {
+    this.bot.on('message', (...args) => this.onMessage(...args));
   }
 
-  private onMessage = (message: Message) => {
+  private onMessage(message: Message) {
     if (message.author.bot) {
       return;
     }
@@ -28,11 +22,17 @@ export class MessageHandler {
     const args = this.bot.stripMention(message.content);
     const argument = new Argument(args);
     this.runCommand(argument, message);
-  };
+  }
 
   private runCommand(argument: Argument, message: Message) {
-    const command = this.bot.getCommand(argument.name);
-    // TODO: move error handler here
-    command.exec(message, argument.params);
+    try {
+      const command = this.bot.getCommand(argument.name);
+      if (!command) {
+        throw new Error('Command not found!');
+      }
+      command.exec(message, argument.params);
+    } catch (err) {
+      this.errorHandler(err, err.message, message.channel);
+    }
   }
 }

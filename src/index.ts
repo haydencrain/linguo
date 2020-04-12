@@ -10,7 +10,8 @@ import { installFrinkiacService } from './services/frinkiac/install';
   const { bot } = installBot({ prefix, activityMsg });
   const { error } = installLogging({ bot });
   const { frinkiacService } = installFrinkiacService();
-  installMessageHandler({ bot });
-  installCommands({ bot, frinkiacService, error });
+  installMessageHandler({ bot, frinkiacService, error });
+  installCommands({ bot, frinkiacService });
+
   bot.login(token);
 })(config);
