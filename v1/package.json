@@ -20,7 +20,7 @@
     "url": "git+https://github.com/haydencrain/Linguo"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "chalk": "^2.4.1",
     "discord.js": "^11.3.0",
     "opusscript": "0.0.6",
