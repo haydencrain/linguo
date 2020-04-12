@@ -1,4 +1,4 @@
-import { FrinkiacService, Frame, Subtitle } from '../services/frinkiac/FrinkiacService';
+import { FrinkiacService, Subtitle, CaptionResponse } from '../services/frinkiac/FrinkiacService';
 import { Message } from 'discord.js';
 
 export class FrinkiacCommands {
@@ -12,39 +12,42 @@ export class FrinkiacCommands {
     return subtitleString;
   }
 
-  toImageAttachment({ Episode, Timestamp }: Frame): { files: string[] } {
-    return {
-      files: [this.frinkiacService.imageUrl(Episode, Timestamp.toString())]
-    };
+  private sendCaption(channel: Message['channel'], caption: CaptionResponse) {
+    const {
+      Subtitles,
+      Frame: { Episode, Timestamp }
+    } = caption;
+    const message = this.toSubtitleString(Subtitles);
+    const image = this.frinkiacService.imageUrl(Episode, Timestamp.toString());
+    channel.send(message, { files: [image] });
   }
 
   async searchQuote(message: Message, args: string[]) {
-    const [data1] = await this.frinkiacService.search(args.join(' '));
-    const caption = await this.frinkiacService.caption(data1.Episode, data1.Timestamp.toString());
-    await message.channel.send(this.toSubtitleString(caption.Subtitles), this.toImageAttachment(caption.Frame));
+    const search = args.join(' ');
+    const [frame] = await this.frinkiacService.search(search);
+    const caption = await this.frinkiacService.caption(frame.Episode, frame.Timestamp.toString());
+    this.sendCaption(message.channel, caption);
   }
 
   async getScreencap(message: Message, args: string[]) {
-    const caption = await this.frinkiacService.caption(args[0], args[1]);
-    if (caption instanceof Error)
+    const [episode, timestamp] = args;
+    const caption = await this.frinkiacService.caption(episode, timestamp);
+    if (caption instanceof Error) {
       throw new Error('Image cannot be found! Make sure you have entered both an episode number and timestamp.');
-    message.channel.send(this.toSubtitleString(caption.Subtitles), this.toImageAttachment(caption.Frame));
+    }
+    this.sendCaption(message.channel, caption);
   }
 
   async getRandomScreencap(message: Message, args: string[]) {
     const caption = await this.frinkiacService.random();
-    message.channel.send(this.toSubtitleString(caption.Subtitles), this.toImageAttachment(caption.Frame));
+    this.sendCaption(message.channel, caption);
   }
 
   async makeMemeImage(message: Message, args: string[]) {
-    const [data1] = await this.frinkiacService.search(args.join(' '));
-    var caption = await this.frinkiacService.caption(data1.Episode, data1.Timestamp.toString());
+    const [frame] = await this.frinkiacService.search(args.join(' '));
+    const { Subtitles, Frame } = await this.frinkiacService.caption(frame.Episode, frame.Timestamp.toString());
     await message.channel.send(
-      this.frinkiacService.memeUrl(
-        caption.Frame.Episode,
-        caption.Frame.Timestamp.toString(),
-        this.toSubtitleString(caption.Subtitles)
-      )
+      this.frinkiacService.memeUrl(Frame.Episode, Frame.Timestamp.toString(), this.toSubtitleString(Subtitles))
     );
   }
 }
