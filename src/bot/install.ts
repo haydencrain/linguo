@@ -1,7 +1,7 @@
 import { Bot } from './Bot';
 
 const ClientMessages = {
-  loggedIn: client => `Logged in as ${client.user.tag}! Handling ${client.guilds.cache.array().length} server(s)`,
+  loggedIn: (bot: Bot) => `Logged in as ${bot.user.tag}! Handling ${bot.guilds.cache.array().length} server(s)`,
   disconnected: 'Disconnected!'
 };
 

@@ -1,6 +1,6 @@
 let secrets;
 try {
-  secrets = require('./secrets.json');
+  secrets = require('../secrets.json');
 } catch (err) {
   console.log('No secrets file available :)');
 }

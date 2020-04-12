@@ -10,7 +10,7 @@ export function installMessageHandler({
 }: {
   bot: Bot;
   frinkiacService: FrinkiacService;
-  error(err: Error);
+  error(err: Error): void;
 }) {
   const errorHandler = (err: Error, errMsg: string, channel: Message['channel']) => {
     error(err);
