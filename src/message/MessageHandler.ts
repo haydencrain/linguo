@@ -27,9 +27,6 @@ export class MessageHandler {
   private runCommand(argument: Argument, message: Message) {
     try {
       const command = this.bot.getCommand(argument.name);
-      if (!command) {
-        throw new Error(`Command \`${argument.name}\` does not exist!`);
-      }
       command.exec(message, argument.params);
     } catch (err) {
       this.errorHandler(err, err.message, message.channel);

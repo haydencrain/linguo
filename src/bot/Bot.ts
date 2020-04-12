@@ -52,7 +52,7 @@ export class Bot extends Client {
   getCommand(name: string) {
     const command = this.commands.find(c => c.name === name);
     if (!command) {
-      throw new Error('Command Not Found');
+      throw new Error(`Command \`${name}\` does not exist!`);
     }
     return command;
   }
