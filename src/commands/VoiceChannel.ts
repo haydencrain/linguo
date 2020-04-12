@@ -1,5 +1,7 @@
-import { Message, Guild, StreamDispatcher } from 'discord.js';
+import { Message, Guild, StreamDispatcher, TextChannel, DMChannel, NewsChannel } from 'discord.js';
 import ytdl from 'ytdl-core';
+
+type MessageChannel = TextChannel | DMChannel | NewsChannel;
 
 class SongDetail {
   url: string;
@@ -15,9 +17,10 @@ class SongDetail {
 
 class GuildPlaylist {
   guild: Guild;
-  currentSong?: SongDetail;
   queue: SongDetail[] = [];
-  private dispatcher: StreamDispatcher;
+  currentSong?: SongDetail;
+  private dispatcher?: StreamDispatcher;
+  private messageChannel?: MessageChannel;
 
   constructor(guild: Guild) {
     this.guild = guild;
@@ -54,6 +57,10 @@ class GuildPlaylist {
     return queueDetails;
   }
 
+  setMessageChannel(channel: MessageChannel) {
+    this.messageChannel = channel;
+  }
+
   async add(url: string, requester: string): Promise<SongDetail> {
     try {
       const info = await ytdl.getInfo(url);
@@ -69,25 +76,28 @@ class GuildPlaylist {
     }
   }
 
-  play(): SongDetail | undefined {
+  play(): void {
     const song = this.queue.shift();
     this.currentSong = song;
     if (!this.currentSong) {
+      this.messageChannel.send('No more songs left in the queue!');
       return undefined;
     }
 
     const stream = ytdl(this.currentSong.url, { filter: 'audioonly' });
     this.dispatcher = this.guild.voice.connection.play(stream);
     this.bindDispatcherListeners();
-    return this.currentSong;
+    this.messageChannel.send(`Playing: **${song.title}** as requested by: **${song.requester}**`);
   }
 
   pause() {
     this.dispatcher?.pause();
+    this.messageChannel.send(`Playback Paused!`);
   }
 
   resume() {
     this.dispatcher?.resume();
+    this.messageChannel.send(`Playback Resumed!`);
   }
 }
 
@@ -164,21 +174,19 @@ export class VoiceChannelCommands {
   play(message: Message, args: string[]) {
     const { guild, channel } = message;
     const guildPlaylist = this.getGuildPlaylist(guild);
-    const { title, requester } = guildPlaylist.play();
-    channel.send(`Playing: **${title}** as requested by: **${requester}**`);
+    guildPlaylist.setMessageChannel(channel);
+    guildPlaylist.play();
   }
 
   pause(message: Message, args: string[]) {
-    const { guild, channel } = message;
+    const { guild } = message;
     const guildPlaylist = this.getGuildPlaylist(guild);
     guildPlaylist.pause();
-    channel.send(`Playback Paused!`);
   }
 
   resume(message: Message, args: string[]) {
-    const { guild, channel } = message;
+    const { guild } = message;
     const guildPlaylist = this.getGuildPlaylist(guild);
     guildPlaylist.resume();
-    channel.send(`Playback Resumed!`);
   }
 }
