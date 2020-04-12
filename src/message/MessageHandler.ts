@@ -28,7 +28,7 @@ export class MessageHandler {
     try {
       const command = this.bot.getCommand(argument.name);
       if (!command) {
-        throw new Error('Command not found!');
+        throw new Error(`Command \`${argument.name}\` does not exist!`);
       }
       command.exec(message, argument.params);
     } catch (err) {
