@@ -2,15 +2,7 @@ import axios from 'axios';
 import * as queryString from 'query-string';
 import util from 'util';
 
-export interface IFrinkiacService {
-  imageUrl(episode: string, timestamp: string): string;
-  search(search: string): Promise<any>;
-  meme(episde: string, timestamp: string, caption: string): Promise<any>;
-  caption(episode: string, timestamp: string): Promise<any>;
-  random(): Promise<any>;
-}
-
-export class FrinkiacService implements IFrinkiacService {
+export class FrinkiacService {
   private static BASE_URL = 'https://frinkiac.com/';
   private static SEARCH_URL = `api/search?%s`;
   private static MEME_URL = 'meme/%s/%s.jpg?%s';

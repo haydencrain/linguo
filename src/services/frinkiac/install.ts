@@ -1,6 +1,6 @@
-import { FrinkiacService, IFrinkiacService } from './FrinkiacService';
+import { FrinkiacService } from './FrinkiacService';
 
-export function installFrinkiac(): { frinkiacService: IFrinkiacService } {
+export function installFrinkiacService(): { frinkiacService: FrinkiacService } {
   const frinkiacService = new FrinkiacService();
   return { frinkiacService };
 }

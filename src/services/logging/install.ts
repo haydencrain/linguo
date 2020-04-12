@@ -1,11 +1,12 @@
-import { Client } from 'discord.js';
 import chalk from 'chalk';
+import { Bot } from '../../bot/Bot';
 
-export function installLogging({ client }: { client: Client }) {
-  const error = (msg) => console.debug(chalk.red(msg));
-  const warn = (msg) => console.debug(chalk.yellow(msg));
-  const info = (msg) => console.debug(chalk.dim.white(msg));
-  client.on('error', error);
-  client.on('warn', warn);
-  client.on('debug', info);
+export function installLogging({ bot }: { bot: Bot }): { error(msg: Error) } {
+  const error = (msg: Error) => console.debug(chalk.red(msg));
+  const warn = (msg: string) => console.debug(chalk.yellow(msg));
+  const info = (msg: string) => console.debug(chalk.dim.white(msg));
+  bot.on('error', error);
+  bot.on('warn', warn);
+  bot.on('debug', info);
+  return { error };
 }
