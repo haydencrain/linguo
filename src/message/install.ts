@@ -6,17 +6,12 @@ import { Message } from 'discord.js';
 export function installMessageHandler({
   bot,
   frinkiacService,
-  error
+  errorHandler
 }: {
   bot: Bot;
   frinkiacService: FrinkiacService;
-  error(err: Error): void;
+  errorHandler(err: Error, errMsg: string, channel: Message['channel']): void;
 }) {
-  const errorHandler = (err: Error, errMsg: string, channel: Message['channel']) => {
-    error(err);
-    channel.send('Error: ' + errMsg, { files: [frinkiacService.imageUrl('S12E18', '1232440')] });
-  };
-
   const messageHandler = new MessageHandler(bot, errorHandler);
   return { messageHandler };
 }
