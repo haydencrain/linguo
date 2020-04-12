@@ -15,6 +15,8 @@ export class MessageHandler {
       return;
     }
 
+    console.log(message.content);
+
     if (this.bot.isSelf(message.author.id) || !this.bot.isMentioned(message.content)) {
       return;
     }
