@@ -12,10 +12,6 @@ export class Bot extends Client {
     super(clientOpts);
   }
 
-  get mentionTag() {
-    return `<@!${this.user.id}>`;
-  }
-
   get prefix() {
     return this.opts.prefix;
   }
@@ -34,14 +30,14 @@ export class Bot extends Client {
   }
 
   isMentioned(content: string) {
-    return content.startsWith(this.prefix) || content.startsWith(this.mentionTag);
+    return content.toLowerCase().startsWith(this.prefix) || content.replace(/[<@!>]/g, '').startsWith(this.user.id);
   }
 
   stripMention(content: string) {
     if (content.startsWith(this.prefix)) {
       return content.slice(this.prefix.length);
     } else {
-      return content.slice(this.mentionTag.length);
+      return content.replace(/[<@!>]/g, '').slice(this.user.id.length);
     }
   }
 

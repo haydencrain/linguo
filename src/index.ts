@@ -12,6 +12,5 @@ import { installFrinkiacService } from './services/frinkiac/install';
   const { frinkiacService } = installFrinkiacService();
   installMessageHandler({ bot, frinkiacService, error });
   installCommands({ bot, frinkiacService });
-
   bot.login(token);
 })(config);
