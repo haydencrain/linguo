@@ -81,6 +81,12 @@ class GuildPlaylist {
   }
 
   play(): void {
+    const { voice: voiceChannel } = this.guild;
+    if (!voiceChannel) {
+      this.messageChannel.send('Please join a voice channel first!');
+      return undefined;
+    }
+
     if (this.isPlaying) {
       this.messageChannel.send('A song is already playing!');
       return undefined;
