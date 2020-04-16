@@ -19,6 +19,7 @@ class GuildPlaylist {
   guild: Guild;
   queue: SongDetail[] = [];
   currentSong?: SongDetail;
+  isPlaying: boolean = false;
   private dispatcher?: StreamDispatcher;
   private messageChannel?: MessageChannel;
 
@@ -28,10 +29,12 @@ class GuildPlaylist {
 
   private bindDispatcherListeners() {
     this.dispatcher.on('end', () => {
+      this.messageChannel.send('song has ended');
+      this.isPlaying = false;
       this.dispatcher.destroy();
       this.play();
     });
-    this.dispatcher.on('error', err => console.log(err));
+    this.dispatcher.on('error', (err) => console.log(err));
   }
 
   get guildId() {
@@ -77,8 +80,12 @@ class GuildPlaylist {
   }
 
   play(): void {
-    const song = this.queue.shift();
-    this.currentSong = song;
+    if (this.isPlaying) {
+      this.messageChannel.send('A song is already playing!');
+      return undefined;
+    }
+
+    this.currentSong = this.queue.shift();
     if (!this.currentSong) {
       this.messageChannel.send('No more songs left in the queue!');
       return undefined;
@@ -87,7 +94,10 @@ class GuildPlaylist {
     const stream = ytdl(this.currentSong.url, { filter: 'audioonly' });
     this.dispatcher = this.guild.voice.connection.play(stream);
     this.bindDispatcherListeners();
-    this.messageChannel.send(`Playing: **${song.title}** as requested by: **${song.requester}**`);
+    this.isPlaying = true;
+    this.messageChannel.send(
+      `Playing: **${this.currentSong.title}** as requested by: **${this.currentSong.requester}**`
+    );
   }
 
   pause() {
@@ -107,7 +117,7 @@ export class VoiceChannelCommands {
   constructor(private errorHandler?: (err: Error, errMsg: string, channel: Message['channel']) => void) {}
 
   private getGuildPlaylist(guild: Guild): GuildPlaylist {
-    let playlist = this.guildPlaylists.find(p => p.guildId === guild.id);
+    let playlist = this.guildPlaylists.find((p) => p.guildId === guild.id);
     if (!playlist) {
       playlist = new GuildPlaylist(guild);
       this.guildPlaylists.push(playlist);
@@ -188,5 +198,11 @@ export class VoiceChannelCommands {
     const { guild } = message;
     const guildPlaylist = this.getGuildPlaylist(guild);
     guildPlaylist.resume();
+  }
+
+  skip(message: Message, args: string[]) {
+    const { guild } = message;
+    const guildPlaylist = this.getGuildPlaylist(guild);
+    guildPlaylist.skip();
   }
 }
