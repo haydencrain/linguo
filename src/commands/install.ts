@@ -96,6 +96,11 @@ export function installCommands({
       name: 'resume',
       description: 'Resume the current song',
       exec: (...args) => voiceChannelCommands.resume(...args)
+    }),
+    new Command({
+      name: 'skip',
+      description: 'Skip the current song',
+      exec: (...args) => voiceChannelCommands.skip(...args)
     })
   ]);
 }

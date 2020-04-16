@@ -27,14 +27,15 @@ class GuildPlaylist {
     this.guild = guild;
   }
 
-  private bindDispatcherListeners() {
-    this.dispatcher.on('end', () => {
-      this.messageChannel.send('song has ended');
-      this.isPlaying = false;
-      this.dispatcher.destroy();
-      this.play();
-    });
+  private bindDispatcherEvents() {
+    this.dispatcher.on('finish', () => this.playNextSong());
     this.dispatcher.on('error', (err) => console.log(err));
+  }
+
+  private playNextSong() {
+    this.isPlaying = false;
+    this.dispatcher.destroy();
+    this.play();
   }
 
   get guildId() {
@@ -60,7 +61,7 @@ class GuildPlaylist {
     return queueDetails;
   }
 
-  setMessageChannel(channel: MessageChannel) {
+  setMessageChannel(channel: MessageChannel): void {
     this.messageChannel = channel;
   }
 
@@ -93,19 +94,23 @@ class GuildPlaylist {
 
     const stream = ytdl(this.currentSong.url, { filter: 'audioonly' });
     this.dispatcher = this.guild.voice.connection.play(stream);
-    this.bindDispatcherListeners();
     this.isPlaying = true;
+    this.bindDispatcherEvents();
     this.messageChannel.send(
       `Playing: **${this.currentSong.title}** as requested by: **${this.currentSong.requester}**`
     );
   }
 
-  pause() {
+  skip(): void {
+    this.playNextSong();
+  }
+
+  pause(): void {
     this.dispatcher?.pause();
     this.messageChannel.send(`Playback Paused!`);
   }
 
-  resume() {
+  resume(): void {
     this.dispatcher?.resume();
     this.messageChannel.send(`Playback Resumed!`);
   }
