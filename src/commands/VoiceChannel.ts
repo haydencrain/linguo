@@ -1,5 +1,5 @@
-import { Message, Guild, StreamDispatcher, TextChannel, DMChannel, NewsChannel } from 'discord.js';
-import ytdl from 'ytdl-core';
+import { Message, Guild, StreamDispatcher, TextChannel, DMChannel, NewsChannel, VoiceConnection } from 'discord.js';
+import ytdl from 'ytdl-core-discord';
 
 type MessageChannel = TextChannel | DMChannel | NewsChannel;
 
@@ -98,13 +98,16 @@ class GuildPlaylist {
       return undefined;
     }
 
-    const stream = ytdl(this.currentSong.url, { filter: 'audioonly' });
-    this.dispatcher = this.guild.voice.connection.play(stream);
+    this.startPlayback(this.currentSong, voiceChannel.connection);
+  }
+
+  private async startPlayback(song: SongDetail, connection: VoiceConnection): Promise<void> {
+    const { url, title, requester } = song;
+    const stream = await ytdl(url, { filter: 'audioonly' });
+    this.dispatcher = connection.play(stream);
     this.isPlaying = true;
     this.bindDispatcherEvents();
-    this.messageChannel.send(
-      `Playing: **${this.currentSong.title}** as requested by: **${this.currentSong.requester}**`
-    );
+    this.messageChannel.send(`Playing: **${title}** as requested by: **${requester}**`);
   }
 
   skip(): void {
