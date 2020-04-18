@@ -16,7 +16,7 @@ git push heroku master
 - [x] deploy to heroku
 - [x] automatic deployment
 - [x] playback youtube video functionality e.g. like [OhGodMusicBot](https://github.com/bdistin/OhGodMusicBot)
-- [ ] recreate bot using es6 classes
+- [x] recreate bot using es6 classes
 - [ ] search for youtube videos without having to use url
 - [ ] implement [luis ai!](https://www.luis.ai/), or something similar to that
 
