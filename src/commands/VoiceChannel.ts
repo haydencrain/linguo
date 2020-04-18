@@ -1,5 +1,5 @@
 import { Message, Guild, StreamDispatcher, TextChannel, DMChannel, NewsChannel, VoiceConnection } from 'discord.js';
-import ytdl from 'ytdl-core-discord';
+import ytdl from 'ytdl-core';
 
 type MessageChannel = TextChannel | DMChannel | NewsChannel;
 
