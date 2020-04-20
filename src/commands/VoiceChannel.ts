@@ -126,15 +126,17 @@ class GuildPlaylist {
 }
 
 export class VoiceChannelCommands {
-  guildPlaylists: GuildPlaylist[] = [];
+  guildPlaylists: Map<string, GuildPlaylist>;
 
-  constructor(private errorHandler?: (err: Error, errMsg: string, channel: Message['channel']) => void) {}
+  constructor(private errorHandler?: (err: Error, errMsg: string, channel: Message['channel']) => void) {
+    this.guildPlaylists = new Map<string, GuildPlaylist>();
+  }
 
   private getGuildPlaylist(guild: Guild): GuildPlaylist {
-    let playlist = this.guildPlaylists.find((p) => p.guildId === guild.id);
+    let playlist = this.guildPlaylists.get(guild.id);
     if (!playlist) {
       playlist = new GuildPlaylist(guild);
-      this.guildPlaylists.push(playlist);
+      this.guildPlaylists.set(guild.id, playlist);
     }
     return playlist;
   }
