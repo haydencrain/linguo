@@ -5,6 +5,7 @@ import { GeneralCommands } from './General';
 import { FrinkiacCommands } from './Frinkiac';
 import { Command } from '../classes/Command';
 import { VoiceChannelCommands } from './VoiceChannel';
+import { ReminderCommands } from './Reminder';
 
 export function installCommands({
   bot,
@@ -22,6 +23,7 @@ export function installCommands({
   const generalCommands = new GeneralCommands();
   const frinkiacCommands = new FrinkiacCommands(frinkiacService);
   const voiceChannelCommands = new VoiceChannelCommands(errorHandler);
+  const reminderCommands = new ReminderCommands();
 
   bot.addCommands([
     new Command({
@@ -101,6 +103,11 @@ export function installCommands({
       name: 'skip',
       description: 'Skip the current song',
       exec: (...args) => voiceChannelCommands.skip(...args)
+    }),
+    new Command({
+      name: 'reminder',
+      description: 'Water drinking reminders! `add` to add, `remove` to remove',
+      exec: (...args) => reminderCommands.reminder(...args)
     })
   ]);
 }
