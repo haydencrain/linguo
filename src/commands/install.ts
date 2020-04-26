@@ -106,7 +106,7 @@ export function installCommands({
     }),
     new Command({
       name: 'reminder',
-      description: 'Water drinking reminders! `add` to add, `remove` to remove',
+      description: 'Water drinking reminders! args: `start` and `stop`',
       exec: (...args) => reminderCommands.reminder(...args)
     })
   ]);
