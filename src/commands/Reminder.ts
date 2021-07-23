@@ -3,6 +3,7 @@ import { Message, TextChannel, DMChannel, NewsChannel } from 'discord.js';
 const THIRTY_MINUTES = 1000 * 60 * 30;
 const ONE_HOUR = THIRTY_MINUTES * 2;
 const WATER_GIF = 'https://media0.giphy.com/media/3orif8UAkN2dvt8MGA/source.gif';
+const BEER_GIF = 'https://deadhomersociety.files.wordpress.com/2010/05/bartvs-australia1_thumb.png';
 
 type Channel = TextChannel | DMChannel | NewsChannel;
 

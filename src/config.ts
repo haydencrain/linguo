@@ -5,7 +5,7 @@ try {
   console.log('No secrets file available :)');
 }
 
-export type Config = {
+type Config = {
   ownerId: string;
   prefix: string;
   activityMsg: string;

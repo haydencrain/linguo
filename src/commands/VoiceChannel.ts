@@ -70,7 +70,7 @@ class GuildPlaylist {
       const info = await ytdl.getInfo(url);
       const song = new SongDetail({
         url,
-        title: info.title,
+        title: info.videoDetails.title,
         requester
       });
       this.queue.push(song);
